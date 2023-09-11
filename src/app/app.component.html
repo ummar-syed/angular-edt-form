@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+  <div [formArrayName]="formArrayName">
+    <div *ngFor="let employee of employees().controls; let empIndex = index">
+      <div [formGroupName]="empIndex">
+        <ng-container *ngFor="let formCtrl of columnsArr">
+          {{ formCtrl }}
+          <input type="text" [formControlName]="formCtrl" />
+        </ng-container>
+        <ng-container *ngIf="addNewCheck(employee); else AddEMP">
+          <button type="button" (click)="addEmployee(employee)">
+            Add Employee
+          </button>
+        </ng-container>
+        <ng-template #AddEMP>
+          <button (click)="editEmployee(empIndex)">E</button>
+          <button (click)="removeEmployee(empIndex)">D</button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</form>
+
+<br />
+{{ form.getRawValue() | json }}
